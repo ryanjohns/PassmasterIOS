@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9419467516E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */; };
+		9419467716E716AB00AD0BD8 /* apple-touch-icon-114x114-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */; };
+		9419467916E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */; };
+		9419467B16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */; };
 		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
 		94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C416E7159B00AAADAF /* Foundation.framework */; };
 		94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C616E7159B00AAADAF /* CoreGraphics.framework */; };
@@ -22,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-57x57-precomposed.png"; sourceTree = "<group>"; };
+		9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-114x114-precomposed.png"; sourceTree = "<group>"; };
+		9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-72x72-precomposed.png"; sourceTree = "<group>"; };
+		9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-144x144-precomposed.png"; sourceTree = "<group>"; };
 		94F027BF16E7159B00AAADAF /* Passmaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passmaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F027C216E7159B00AAADAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94F027C416E7159B00AAADAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,11 +66,18 @@
 		94F027B616E7159B00AAADAF = {
 			isa = PBXGroup;
 			children = (
+				9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */,
+				9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */,
+				9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */,
+				9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */,
 				94F027C816E7159B00AAADAF /* Passmaster */,
 				94F027C116E7159B00AAADAF /* Frameworks */,
 				94F027C016E7159B00AAADAF /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
+			wrapsLines = 0;
 		};
 		94F027C016E7159B00AAADAF /* Products */ = {
 			isa = PBXGroup;
@@ -168,6 +183,10 @@
 				94F027D916E7159B00AAADAF /* Default-568h@2x.png in Resources */,
 				94F027DC16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard in Resources */,
 				94F027DF16E7159B00AAADAF /* MainStoryboard_iPad.storyboard in Resources */,
+				9419467516E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png in Resources */,
+				9419467716E716AB00AD0BD8 /* apple-touch-icon-114x114-precomposed.png in Resources */,
+				9419467916E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png in Resources */,
+				9419467B16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +332,7 @@
 				94F027E716E7159B00AAADAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
