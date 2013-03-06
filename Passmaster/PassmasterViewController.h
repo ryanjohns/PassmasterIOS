@@ -10,4 +10,6 @@
 
 @interface PassmasterViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
 @end
