@@ -1,0 +1,320 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
+		94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C416E7159B00AAADAF /* Foundation.framework */; };
+		94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C616E7159B00AAADAF /* CoreGraphics.framework */; };
+		94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94F027CB16E7159B00AAADAF /* InfoPlist.strings */; };
+		94F027CF16E7159B00AAADAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027CE16E7159B00AAADAF /* main.m */; };
+		94F027D316E7159B00AAADAF /* PassmasterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */; };
+		94F027D516E7159B00AAADAF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F027D416E7159B00AAADAF /* Default.png */; };
+		94F027D716E7159B00AAADAF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F027D616E7159B00AAADAF /* Default@2x.png */; };
+		94F027D916E7159B00AAADAF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F027D816E7159B00AAADAF /* Default-568h@2x.png */; };
+		94F027DC16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */; };
+		94F027DF16E7159B00AAADAF /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */; };
+		94F027E216E7159B00AAADAF /* PassmasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027E116E7159B00AAADAF /* PassmasterViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		94F027BF16E7159B00AAADAF /* Passmaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passmaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		94F027C216E7159B00AAADAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		94F027C416E7159B00AAADAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		94F027C616E7159B00AAADAF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		94F027CA16E7159B00AAADAF /* Passmaster-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Passmaster-Info.plist"; sourceTree = "<group>"; };
+		94F027CC16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		94F027CE16E7159B00AAADAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		94F027D016E7159B00AAADAF /* Passmaster-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Passmaster-Prefix.pch"; sourceTree = "<group>"; };
+		94F027D116E7159B00AAADAF /* PassmasterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassmasterAppDelegate.h; sourceTree = "<group>"; };
+		94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassmasterAppDelegate.m; sourceTree = "<group>"; };
+		94F027D416E7159B00AAADAF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		94F027D616E7159B00AAADAF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		94F027D816E7159B00AAADAF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		94F027DB16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		94F027DE16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		94F027E016E7159B00AAADAF /* PassmasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassmasterViewController.h; sourceTree = "<group>"; };
+		94F027E116E7159B00AAADAF /* PassmasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassmasterViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		94F027BC16E7159B00AAADAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */,
+				94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */,
+				94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		94F027B616E7159B00AAADAF = {
+			isa = PBXGroup;
+			children = (
+				94F027C816E7159B00AAADAF /* Passmaster */,
+				94F027C116E7159B00AAADAF /* Frameworks */,
+				94F027C016E7159B00AAADAF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		94F027C016E7159B00AAADAF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				94F027BF16E7159B00AAADAF /* Passmaster.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		94F027C116E7159B00AAADAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94F027C216E7159B00AAADAF /* UIKit.framework */,
+				94F027C416E7159B00AAADAF /* Foundation.framework */,
+				94F027C616E7159B00AAADAF /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		94F027C816E7159B00AAADAF /* Passmaster */ = {
+			isa = PBXGroup;
+			children = (
+				94F027D116E7159B00AAADAF /* PassmasterAppDelegate.h */,
+				94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */,
+				94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */,
+				94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */,
+				94F027E016E7159B00AAADAF /* PassmasterViewController.h */,
+				94F027E116E7159B00AAADAF /* PassmasterViewController.m */,
+				94F027C916E7159B00AAADAF /* Supporting Files */,
+			);
+			path = Passmaster;
+			sourceTree = "<group>";
+		};
+		94F027C916E7159B00AAADAF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				94F027CA16E7159B00AAADAF /* Passmaster-Info.plist */,
+				94F027CB16E7159B00AAADAF /* InfoPlist.strings */,
+				94F027CE16E7159B00AAADAF /* main.m */,
+				94F027D016E7159B00AAADAF /* Passmaster-Prefix.pch */,
+				94F027D416E7159B00AAADAF /* Default.png */,
+				94F027D616E7159B00AAADAF /* Default@2x.png */,
+				94F027D816E7159B00AAADAF /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		94F027BE16E7159B00AAADAF /* Passmaster */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94F027E516E7159B00AAADAF /* Build configuration list for PBXNativeTarget "Passmaster" */;
+			buildPhases = (
+				94F027BB16E7159B00AAADAF /* Sources */,
+				94F027BC16E7159B00AAADAF /* Frameworks */,
+				94F027BD16E7159B00AAADAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Passmaster;
+			productName = Passmaster;
+			productReference = 94F027BF16E7159B00AAADAF /* Passmaster.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		94F027B716E7159B00AAADAF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Passmaster;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Passmaster;
+			};
+			buildConfigurationList = 94F027BA16E7159B00AAADAF /* Build configuration list for PBXProject "Passmaster" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 94F027B616E7159B00AAADAF;
+			productRefGroup = 94F027C016E7159B00AAADAF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				94F027BE16E7159B00AAADAF /* Passmaster */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94F027BD16E7159B00AAADAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */,
+				94F027D516E7159B00AAADAF /* Default.png in Resources */,
+				94F027D716E7159B00AAADAF /* Default@2x.png in Resources */,
+				94F027D916E7159B00AAADAF /* Default-568h@2x.png in Resources */,
+				94F027DC16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard in Resources */,
+				94F027DF16E7159B00AAADAF /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		94F027BB16E7159B00AAADAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94F027CF16E7159B00AAADAF /* main.m in Sources */,
+				94F027D316E7159B00AAADAF /* PassmasterAppDelegate.m in Sources */,
+				94F027E216E7159B00AAADAF /* PassmasterViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		94F027CB16E7159B00AAADAF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94F027CC16E7159B00AAADAF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94F027DB16E7159B00AAADAF /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				94F027DE16E7159B00AAADAF /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		94F027E316E7159B00AAADAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		94F027E416E7159B00AAADAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		94F027E616E7159B00AAADAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
+				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		94F027E716E7159B00AAADAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
+				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		94F027BA16E7159B00AAADAF /* Build configuration list for PBXProject "Passmaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94F027E316E7159B00AAADAF /* Debug */,
+				94F027E416E7159B00AAADAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94F027E516E7159B00AAADAF /* Build configuration list for PBXNativeTarget "Passmaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94F027E616E7159B00AAADAF /* Debug */,
+				94F027E716E7159B00AAADAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 94F027B716E7159B00AAADAF /* Project object */;
+}
