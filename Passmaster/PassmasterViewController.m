@@ -8,7 +8,7 @@
 
 #import "PassmasterViewController.h"
 
-NSString *const PassmasterURL = @"http://passmaster.local/";
+NSString *const PassmasterURL = @"https://passmaster.io/";
 NSString *const PassmasterErrorHTML =
 @"<html>"
 "<head>"
