@@ -62,12 +62,25 @@ NSString *const PassmasterErrorHTML =
 
 - (void)loadOrUpdateWebApp
 {
-  NSString *isLoaded = [self.webView stringByEvaluatingJavaScriptFromString:@"Util.appLoaded()"];
+  NSString *isLoaded = [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.appLoaded()"];
   if ([isLoaded isEqual: @"YES"]) {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"Util.updateAppCache()"];
+    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.updateAppCache()"];
   } else {
     [self loadPassmaster];
   }
+}
+
+- (void)checkLockTime
+{
+  if ([[NSDate date] timeIntervalSinceDate:[self lockTime]] >= 0) {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.lock()"];
+  }
+}
+
+- (void)saveLockTime
+{
+  NSInteger minutes = [[self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.getTimeoutMinutes()"] integerValue];
+  [self setLockTime:[[NSDate alloc] initWithTimeIntervalSinceNow:(minutes * 60)]];
 }
 
 @end

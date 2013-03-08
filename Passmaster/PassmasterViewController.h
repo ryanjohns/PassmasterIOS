@@ -13,9 +13,12 @@ FOUNDATION_EXPORT NSString *const PassmasterErrorHTML;
 
 @interface PassmasterViewController : UIViewController <UIWebViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) NSDate *lockTime;
 
 - (void)loadPassmaster;
 - (void)loadOrUpdateWebApp;
+- (void)checkLockTime;
+- (void)saveLockTime;
 
 @end
