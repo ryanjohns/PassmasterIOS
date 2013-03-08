@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PassmasterViewController : UIViewController
+FOUNDATION_EXPORT NSString *const PassmasterURL;
+FOUNDATION_EXPORT NSString *const PassmasterErrorHTML;
+
+@interface PassmasterViewController : UIViewController <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+
+- (void)loadPassmaster;
+- (void)loadOrUpdateWebApp;
 
 @end
