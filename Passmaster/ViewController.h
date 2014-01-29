@@ -8,15 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-FOUNDATION_EXPORT NSString *const PassmasterURL;
-FOUNDATION_EXPORT NSString *const PassmasterErrorHTML;
-
-@interface PassmasterViewController : UIViewController <UIWebViewDelegate>
+@interface ViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @property (strong, nonatomic) NSDate *lockTime;
 
-- (void)loadPassmaster;
 - (void)loadOrUpdateWebApp;
 - (void)checkLockTime;
 - (void)saveLockTime;

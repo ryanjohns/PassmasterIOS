@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Passmaster. All rights reserved.
 //
 
-#import "PassmasterViewController.h"
+#import "ViewController.h"
 
 NSString *const PassmasterURL = @"https://passmaster.io/";
 NSString *const PassmasterErrorHTML =
@@ -25,7 +25,7 @@ NSString *const PassmasterErrorHTML =
 "</body>"
 "</html>";
 
-@implementation PassmasterViewController
+@implementation ViewController
 
 - (void)viewDidLoad
 {

@@ -6,14 +6,15 @@
 //  Copyright (c) 2013 Passmaster. All rights reserved.
 //
 
-#import "PassmasterAppDelegate.h"
-#import "PassmasterViewController.h"
+#import "AppDelegate.h"
+#import "ViewController.h"
 
-@implementation PassmasterAppDelegate
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // Override point for customization after application launch.
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
   return YES;
 }
 
@@ -28,15 +29,15 @@
   // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
   // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 
-  [(PassmasterViewController *)self.window.rootViewController saveLockTime];
+  [(ViewController *)self.window.rootViewController saveLockTime];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
   // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 
-  [(PassmasterViewController *)self.window.rootViewController checkLockTime];
-  [(PassmasterViewController *)self.window.rootViewController loadOrUpdateWebApp];
+  [(ViewController *)self.window.rootViewController checkLockTime];
+  [(ViewController *)self.window.rootViewController loadOrUpdateWebApp];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

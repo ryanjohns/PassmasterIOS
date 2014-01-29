@@ -7,40 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9419467516E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */; };
-		9419467716E716AB00AD0BD8 /* apple-touch-icon-114x114-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */; };
-		9419467916E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */; };
-		9419467B16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png in Resources */ = {isa = PBXBuildFile; fileRef = 9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */; };
-		9473363816E98942001851E5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473363716E98942001851E5 /* Default.png */; };
-		9473363A16E98950001851E5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473363916E98950001851E5 /* Default@2x.png */; };
-		9473363C16E9895E001851E5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473363B16E9895E001851E5 /* Default-568h@2x.png */; };
-		9473363E16E98A2A001851E5 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473363D16E98A2A001851E5 /* Default-Portrait~ipad.png */; };
-		9473364016E98A66001851E5 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473363F16E98A66001851E5 /* Default-Portrait@2x~ipad.png */; };
-		9473364216E98A93001851E5 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473364116E98A93001851E5 /* Default-Landscape~ipad.png */; };
-		9473364416E98AC0001851E5 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 9473364316E98AC0001851E5 /* Default-Landscape@2x~ipad.png */; };
+		947A2D501899016C00207CB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947A2D4F1899016C00207CB4 /* Images.xcassets */; };
 		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
 		94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C416E7159B00AAADAF /* Foundation.framework */; };
 		94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C616E7159B00AAADAF /* CoreGraphics.framework */; };
 		94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94F027CB16E7159B00AAADAF /* InfoPlist.strings */; };
 		94F027CF16E7159B00AAADAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027CE16E7159B00AAADAF /* main.m */; };
-		94F027D316E7159B00AAADAF /* PassmasterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */; };
-		94F027DC16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */; };
-		94F027DF16E7159B00AAADAF /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */; };
-		94F027E216E7159B00AAADAF /* PassmasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027E116E7159B00AAADAF /* PassmasterViewController.m */; };
+		94F027D316E7159B00AAADAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027D216E7159B00AAADAF /* AppDelegate.m */; };
+		94F027DC16E7159B00AAADAF /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DA16E7159B00AAADAF /* iPhone.storyboard */; };
+		94F027DF16E7159B00AAADAF /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DD16E7159B00AAADAF /* iPad.storyboard */; };
+		94F027E216E7159B00AAADAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027E116E7159B00AAADAF /* ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-57x57-precomposed.png"; sourceTree = "<group>"; };
-		9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-114x114-precomposed.png"; sourceTree = "<group>"; };
-		9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-72x72-precomposed.png"; sourceTree = "<group>"; };
-		9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-touch-icon-144x144-precomposed.png"; sourceTree = "<group>"; };
-		9473363716E98942001851E5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		9473363916E98950001851E5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		9473363B16E9895E001851E5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		9473363D16E98A2A001851E5 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		9473363F16E98A66001851E5 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		9473364116E98A93001851E5 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		9473364316E98AC0001851E5 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		947A2D4F1899016C00207CB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		94F027BF16E7159B00AAADAF /* Passmaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passmaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F027C216E7159B00AAADAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94F027C416E7159B00AAADAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,12 +29,12 @@
 		94F027CC16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94F027CE16E7159B00AAADAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		94F027D016E7159B00AAADAF /* Passmaster-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Passmaster-Prefix.pch"; sourceTree = "<group>"; };
-		94F027D116E7159B00AAADAF /* PassmasterAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassmasterAppDelegate.h; sourceTree = "<group>"; };
-		94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassmasterAppDelegate.m; sourceTree = "<group>"; };
-		94F027DB16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		94F027DE16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		94F027E016E7159B00AAADAF /* PassmasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PassmasterViewController.h; sourceTree = "<group>"; };
-		94F027E116E7159B00AAADAF /* PassmasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PassmasterViewController.m; sourceTree = "<group>"; };
+		94F027D116E7159B00AAADAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		94F027D216E7159B00AAADAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		94F027DB16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		94F027DE16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPad.storyboard; sourceTree = "<group>"; };
+		94F027E016E7159B00AAADAF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		94F027E116E7159B00AAADAF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,17 +54,6 @@
 		94F027B616E7159B00AAADAF = {
 			isa = PBXGroup;
 			children = (
-				9473364316E98AC0001851E5 /* Default-Landscape@2x~ipad.png */,
-				9473364116E98A93001851E5 /* Default-Landscape~ipad.png */,
-				9473363F16E98A66001851E5 /* Default-Portrait@2x~ipad.png */,
-				9473363D16E98A2A001851E5 /* Default-Portrait~ipad.png */,
-				9473363B16E9895E001851E5 /* Default-568h@2x.png */,
-				9473363916E98950001851E5 /* Default@2x.png */,
-				9473363716E98942001851E5 /* Default.png */,
-				9419467A16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png */,
-				9419467816E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png */,
-				9419467616E716AA00AD0BD8 /* apple-touch-icon-114x114-precomposed.png */,
-				9419467416E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png */,
 				94F027C816E7159B00AAADAF /* Passmaster */,
 				94F027C116E7159B00AAADAF /* Frameworks */,
 				94F027C016E7159B00AAADAF /* Products */,
@@ -115,12 +84,13 @@
 		94F027C816E7159B00AAADAF /* Passmaster */ = {
 			isa = PBXGroup;
 			children = (
-				94F027D116E7159B00AAADAF /* PassmasterAppDelegate.h */,
-				94F027D216E7159B00AAADAF /* PassmasterAppDelegate.m */,
-				94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */,
-				94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */,
-				94F027E016E7159B00AAADAF /* PassmasterViewController.h */,
-				94F027E116E7159B00AAADAF /* PassmasterViewController.m */,
+				94F027D116E7159B00AAADAF /* AppDelegate.h */,
+				94F027D216E7159B00AAADAF /* AppDelegate.m */,
+				94F027DA16E7159B00AAADAF /* iPhone.storyboard */,
+				94F027DD16E7159B00AAADAF /* iPad.storyboard */,
+				94F027E016E7159B00AAADAF /* ViewController.h */,
+				94F027E116E7159B00AAADAF /* ViewController.m */,
+				947A2D4F1899016C00207CB4 /* Images.xcassets */,
 				94F027C916E7159B00AAADAF /* Supporting Files */,
 			);
 			path = Passmaster;
@@ -190,19 +160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */,
-				94F027DC16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard in Resources */,
-				94F027DF16E7159B00AAADAF /* MainStoryboard_iPad.storyboard in Resources */,
-				9419467516E716A200AD0BD8 /* apple-touch-icon-57x57-precomposed.png in Resources */,
-				9419467716E716AB00AD0BD8 /* apple-touch-icon-114x114-precomposed.png in Resources */,
-				9419467916E716B900AD0BD8 /* apple-touch-icon-72x72-precomposed.png in Resources */,
-				9419467B16E716BE00AD0BD8 /* apple-touch-icon-144x144-precomposed.png in Resources */,
-				9473363816E98942001851E5 /* Default.png in Resources */,
-				9473363A16E98950001851E5 /* Default@2x.png in Resources */,
-				9473363C16E9895E001851E5 /* Default-568h@2x.png in Resources */,
-				9473363E16E98A2A001851E5 /* Default-Portrait~ipad.png in Resources */,
-				9473364016E98A66001851E5 /* Default-Portrait@2x~ipad.png in Resources */,
-				9473364216E98A93001851E5 /* Default-Landscape~ipad.png in Resources */,
-				9473364416E98AC0001851E5 /* Default-Landscape@2x~ipad.png in Resources */,
+				94F027DC16E7159B00AAADAF /* iPhone.storyboard in Resources */,
+				94F027DF16E7159B00AAADAF /* iPad.storyboard in Resources */,
+				947A2D501899016C00207CB4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,8 +174,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F027CF16E7159B00AAADAF /* main.m in Sources */,
-				94F027D316E7159B00AAADAF /* PassmasterAppDelegate.m in Sources */,
-				94F027E216E7159B00AAADAF /* PassmasterViewController.m in Sources */,
+				94F027D316E7159B00AAADAF /* AppDelegate.m in Sources */,
+				94F027E216E7159B00AAADAF /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,20 +190,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		94F027DA16E7159B00AAADAF /* MainStoryboard_iPhone.storyboard */ = {
+		94F027DA16E7159B00AAADAF /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				94F027DB16E7159B00AAADAF /* en */,
 			);
-			name = MainStoryboard_iPhone.storyboard;
+			name = iPhone.storyboard;
 			sourceTree = "<group>";
 		};
-		94F027DD16E7159B00AAADAF /* MainStoryboard_iPad.storyboard */ = {
+		94F027DD16E7159B00AAADAF /* iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				94F027DE16E7159B00AAADAF /* en */,
 			);
-			name = MainStoryboard_iPad.storyboard;
+			name = iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -313,9 +273,12 @@
 		94F027E616E7159B00AAADAF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -324,9 +287,12 @@
 		94F027E716E7159B00AAADAF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
