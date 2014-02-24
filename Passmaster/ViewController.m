@@ -8,7 +8,8 @@
 
 #import "ViewController.h"
 
-NSString *const PassmasterURL = @"https://passmaster.io/";
+NSString *const PassmasterScheme = @"https";
+NSString *const PassmasterHost = @"passmaster.io";
 NSString *const PassmasterErrorHTML =
 @"<html>"
 "<head>"
@@ -55,9 +56,18 @@ NSString *const PassmasterErrorHTML =
   [self.webView loadHTMLString:errorString baseURL:nil];
 }
 
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+  if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[[request URL] host] isEqualToString:PassmasterHost]) {
+    [[UIApplication sharedApplication] openURL:[request URL]];
+    return NO;
+  }
+  return YES;
+}
+
 - (void)loadPassmaster
 {
-  [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:PassmasterURL]]];
+  [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self passmasterURL]]]];
 }
 
 - (void)loadOrUpdateWebApp
@@ -81,6 +91,11 @@ NSString *const PassmasterErrorHTML =
 {
   NSInteger minutes = [[self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.getTimeoutMinutes()"] integerValue];
   [self setLockTime:[[NSDate alloc] initWithTimeIntervalSinceNow:(minutes * 60)]];
+}
+
+- (NSString *)passmasterURL
+{
+  return [NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost];
 }
 
 @end
