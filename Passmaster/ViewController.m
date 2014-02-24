@@ -39,6 +39,8 @@ NSString *const PassmasterErrorHTML =
   [super didReceiveMemoryWarning];
 }
 
+#pragma mark - UIWebViewDelegate methods
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
   [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -65,10 +67,7 @@ NSString *const PassmasterErrorHTML =
   return YES;
 }
 
-- (void)loadPassmaster
-{
-  [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self passmasterURL]]]];
-}
+#pragma mark - Public helpers
 
 - (void)loadOrUpdateWebApp
 {
@@ -91,6 +90,13 @@ NSString *const PassmasterErrorHTML =
 {
   NSInteger minutes = [[self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.getTimeoutMinutes()"] integerValue];
   [self setLockTime:[[NSDate alloc] initWithTimeIntervalSinceNow:(minutes * 60)]];
+}
+
+#pragma mark - Private helpers
+
+- (void)loadPassmaster
+{
+  [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self passmasterURL]]]];
 }
 
 - (NSString *)passmasterURL
