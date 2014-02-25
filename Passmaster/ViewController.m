@@ -60,8 +60,9 @@ NSString *const PassmasterErrorHTML =
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-  if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[[request URL] host] isEqualToString:PassmasterHost]) {
-    [[UIApplication sharedApplication] openURL:[request URL]];
+  NSURL *url = [request URL];
+  if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
+    [[UIApplication sharedApplication] openURL:url];
     return NO;
   }
   return YES;
@@ -72,7 +73,7 @@ NSString *const PassmasterErrorHTML =
 - (void)loadOrUpdateWebApp
 {
   NSString *isLoaded = [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.appLoaded()"];
-  if ([isLoaded isEqual: @"YES"]) {
+  if ([isLoaded isEqualToString:@"YES"]) {
     [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.updateAppCache()"];
   } else {
     [self loadPassmaster];
@@ -96,12 +97,8 @@ NSString *const PassmasterErrorHTML =
 
 - (void)loadPassmaster
 {
-  [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self passmasterURL]]]];
-}
-
-- (NSString *)passmasterURL
-{
-  return [NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost];
+  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost]];
+  [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end
