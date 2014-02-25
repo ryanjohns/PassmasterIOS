@@ -10,6 +10,17 @@
 
 NSString *const PassmasterScheme = @"https";
 NSString *const PassmasterHost = @"passmaster.io";
+NSString *const PassmasterJsScheme = @"passmasterjs";
+NSString *const PassmasterJsAlertOverride =
+@"window.alert = function(message) {"
+"var iframe = document.createElement('IFRAME');"
+"iframe.setAttribute('src', '%@:alert:' + encodeURIComponent(message));"
+"iframe.setAttribute('width', '1px');"
+"iframe.setAttribute('height', '1px');"
+"document.documentElement.appendChild(iframe);"
+"iframe.parentNode.removeChild(iframe);"
+"iframe = null;"
+"};";
 NSString *const PassmasterErrorHTML =
 @"<html>"
 "<head>"
@@ -49,6 +60,7 @@ NSString *const PassmasterErrorHTML =
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:PassmasterJsAlertOverride, PassmasterJsScheme]];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -61,7 +73,23 @@ NSString *const PassmasterErrorHTML =
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
   NSURL *url = [request URL];
-  if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
+  if ([[url scheme] isEqualToString:PassmasterJsScheme]) {
+    NSArray *components = [[url absoluteString] componentsSeparatedByString:@":"];
+    NSString *function = [components objectAtIndex:1];
+    NSString *argument = @"";
+    if (components.count > 2) {
+      NSRange range;
+      range.location = 2;
+      range.length = components.count - 2;
+      argument = [[[components subarrayWithRange:range] componentsJoinedByString:@":"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    if ([function isEqualToString:@"alert"]) {
+      [self alert:argument];
+    } else if ([function isEqualToString:@"copyToClipboard"]) {
+      [self copyToClipboard:argument];
+    }
+    return NO;
+  } else if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
     [[UIApplication sharedApplication] openURL:url];
     return NO;
   }
@@ -99,6 +127,17 @@ NSString *const PassmasterErrorHTML =
 {
   NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost]];
   [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+- (void)alert:(NSString *)message
+{
+  UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:@"Passmaster" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+  [theAlert show];
+}
+
+- (void)copyToClipboard:(NSString *)text
+{
+
 }
 
 @end
