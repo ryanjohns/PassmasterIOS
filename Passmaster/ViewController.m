@@ -13,13 +13,13 @@ NSString *const PassmasterHost = @"passmaster.io";
 NSString *const PassmasterJsScheme = @"passmasterjs";
 NSString *const PassmasterJsAlertOverride =
 @"window.alert = function(message) {"
-"var iframe = document.createElement('IFRAME');"
-"iframe.setAttribute('src', '%@:alert:' + encodeURIComponent(message));"
-"iframe.setAttribute('width', '1px');"
-"iframe.setAttribute('height', '1px');"
-"document.documentElement.appendChild(iframe);"
-"iframe.parentNode.removeChild(iframe);"
-"iframe = null;"
+  "var iframe = document.createElement('IFRAME');"
+  "iframe.setAttribute('src', '%@:alert:' + encodeURIComponent(message));"
+  "iframe.setAttribute('width', '1px');"
+  "iframe.setAttribute('height', '1px');"
+  "document.documentElement.appendChild(iframe);"
+  "iframe.parentNode.removeChild(iframe);"
+  "iframe = null;"
 "};";
 NSString *const PassmasterErrorHTML =
 @"<html>"
@@ -42,6 +42,15 @@ NSString *const PassmasterErrorHTML =
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
+  UIWebView *tempWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
+  NSString *userAgent = [tempWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+  if ([userAgent rangeOfString:@"PassmasterIOS"].location == NSNotFound) {
+    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    userAgent = [userAgent stringByAppendingString:[NSString stringWithFormat:@" PassmasterIOS/%@", appVersion]];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent":userAgent }];
+  }
+
   [self loadPassmaster];
 }
 
@@ -137,7 +146,10 @@ NSString *const PassmasterErrorHTML =
 
 - (void)copyToClipboard:(NSString *)text
 {
+  UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+  pasteboard.string = text;
 
+  [self alert:@"Copied to Clipboard"];
 }
 
 @end
