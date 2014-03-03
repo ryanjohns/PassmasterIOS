@@ -11,16 +11,6 @@
 NSString *const PassmasterScheme = @"https";
 NSString *const PassmasterHost = @"passmaster.io";
 NSString *const PassmasterJsScheme = @"passmasterjs";
-NSString *const PassmasterJsAlertOverride =
-@"window.alert = function(message) {"
-  "var iframe = document.createElement('IFRAME');"
-  "iframe.setAttribute('src', '%@:alert:' + encodeURIComponent(message));"
-  "iframe.setAttribute('width', '1px');"
-  "iframe.setAttribute('height', '1px');"
-  "document.documentElement.appendChild(iframe);"
-  "iframe.parentNode.removeChild(iframe);"
-  "iframe = null;"
-"};";
 NSString *const PassmasterErrorHTML =
 @"<html>"
 "<head>"
@@ -69,7 +59,6 @@ NSString *const PassmasterErrorHTML =
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:PassmasterJsAlertOverride, PassmasterJsScheme]];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -92,9 +81,7 @@ NSString *const PassmasterErrorHTML =
       range.length = components.count - 2;
       argument = [[[components subarrayWithRange:range] componentsJoinedByString:@":"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
-    if ([function isEqualToString:@"alert"]) {
-      [self alert:argument];
-    } else if ([function isEqualToString:@"copyToClipboard"]) {
+    if ([function isEqualToString:@"copyToClipboard"]) {
       [self copyToClipboard:argument];
     }
     return NO;
@@ -138,18 +125,10 @@ NSString *const PassmasterErrorHTML =
   [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-- (void)alert:(NSString *)message
-{
-  UIAlertView *theAlert = [[UIAlertView alloc] initWithTitle:@"Passmaster" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-  [theAlert show];
-}
-
 - (void)copyToClipboard:(NSString *)text
 {
   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
   pasteboard.string = text;
-
-  [self alert:@"Copied to Clipboard"];
 }
 
 @end
