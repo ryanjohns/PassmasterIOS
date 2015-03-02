@@ -8,19 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		947A2D501899016C00207CB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947A2D4F1899016C00207CB4 /* Images.xcassets */; };
+		94A363A91AA3FF5C003B0618 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A363A81AA3FF5C003B0618 /* Launch Screen.xib */; };
 		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
 		94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C416E7159B00AAADAF /* Foundation.framework */; };
 		94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C616E7159B00AAADAF /* CoreGraphics.framework */; };
 		94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94F027CB16E7159B00AAADAF /* InfoPlist.strings */; };
 		94F027CF16E7159B00AAADAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027CE16E7159B00AAADAF /* main.m */; };
 		94F027D316E7159B00AAADAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027D216E7159B00AAADAF /* AppDelegate.m */; };
-		94F027DC16E7159B00AAADAF /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DA16E7159B00AAADAF /* iPhone.storyboard */; };
-		94F027DF16E7159B00AAADAF /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DD16E7159B00AAADAF /* iPad.storyboard */; };
+		94F027DC16E7159B00AAADAF /* Passmaster.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94F027DA16E7159B00AAADAF /* Passmaster.storyboard */; };
 		94F027E216E7159B00AAADAF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F027E116E7159B00AAADAF /* ViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		947A2D4F1899016C00207CB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		94A363A81AA3FF5C003B0618 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		94F027BF16E7159B00AAADAF /* Passmaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passmaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F027C216E7159B00AAADAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94F027C416E7159B00AAADAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -31,8 +32,7 @@
 		94F027D016E7159B00AAADAF /* Passmaster-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Passmaster-Prefix.pch"; sourceTree = "<group>"; };
 		94F027D116E7159B00AAADAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		94F027D216E7159B00AAADAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		94F027DB16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
-		94F027DE16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPad.storyboard; sourceTree = "<group>"; };
+		94F027DB16E7159B00AAADAF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Passmaster.storyboard; sourceTree = "<group>"; };
 		94F027E016E7159B00AAADAF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		94F027E116E7159B00AAADAF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,8 +86,8 @@
 			children = (
 				94F027D116E7159B00AAADAF /* AppDelegate.h */,
 				94F027D216E7159B00AAADAF /* AppDelegate.m */,
-				94F027DA16E7159B00AAADAF /* iPhone.storyboard */,
-				94F027DD16E7159B00AAADAF /* iPad.storyboard */,
+				94F027DA16E7159B00AAADAF /* Passmaster.storyboard */,
+				94A363A81AA3FF5C003B0618 /* Launch Screen.xib */,
 				94F027E016E7159B00AAADAF /* ViewController.h */,
 				94F027E116E7159B00AAADAF /* ViewController.m */,
 				947A2D4F1899016C00207CB4 /* Images.xcassets */,
@@ -165,9 +165,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */,
-				94F027DC16E7159B00AAADAF /* iPhone.storyboard in Resources */,
-				94F027DF16E7159B00AAADAF /* iPad.storyboard in Resources */,
+				94F027DC16E7159B00AAADAF /* Passmaster.storyboard in Resources */,
 				947A2D501899016C00207CB4 /* Images.xcassets in Resources */,
+				94A363A91AA3FF5C003B0618 /* Launch Screen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,20 +195,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		94F027DA16E7159B00AAADAF /* iPhone.storyboard */ = {
+		94F027DA16E7159B00AAADAF /* Passmaster.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				94F027DB16E7159B00AAADAF /* en */,
 			);
-			name = iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		94F027DD16E7159B00AAADAF /* iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94F027DE16E7159B00AAADAF /* en */,
-			);
-			name = iPad.storyboard;
+			name = Passmaster.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -285,7 +277,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -302,7 +294,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
