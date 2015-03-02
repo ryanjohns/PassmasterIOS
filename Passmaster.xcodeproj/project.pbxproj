@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		947A2D501899016C00207CB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947A2D4F1899016C00207CB4 /* Images.xcassets */; };
 		94A363A91AA3FF5C003B0618 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94A363A81AA3FF5C003B0618 /* Launch Screen.xib */; };
+		94D8FDB41AA43BAB006560B2 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D8FDB31AA43BAB006560B2 /* LocalAuthentication.framework */; };
+		94D8FDB61AA444B3006560B2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D8FDB51AA444B3006560B2 /* Security.framework */; };
 		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
 		94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C416E7159B00AAADAF /* Foundation.framework */; };
 		94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C616E7159B00AAADAF /* CoreGraphics.framework */; };
@@ -22,6 +24,8 @@
 /* Begin PBXFileReference section */
 		947A2D4F1899016C00207CB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		94A363A81AA3FF5C003B0618 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		94D8FDB31AA43BAB006560B2 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		94D8FDB51AA444B3006560B2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		94F027BF16E7159B00AAADAF /* Passmaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Passmaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		94F027C216E7159B00AAADAF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94F027C416E7159B00AAADAF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -42,6 +46,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94D8FDB61AA444B3006560B2 /* Security.framework in Frameworks */,
+				94D8FDB41AA43BAB006560B2 /* LocalAuthentication.framework in Frameworks */,
 				94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */,
 				94F027C516E7159B00AAADAF /* Foundation.framework in Frameworks */,
 				94F027C716E7159B00AAADAF /* CoreGraphics.framework in Frameworks */,
@@ -74,6 +80,8 @@
 		94F027C116E7159B00AAADAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				94D8FDB51AA444B3006560B2 /* Security.framework */,
+				94D8FDB31AA43BAB006560B2 /* LocalAuthentication.framework */,
 				94F027C216E7159B00AAADAF /* UIKit.framework */,
 				94F027C416E7159B00AAADAF /* Foundation.framework */,
 				94F027C616E7159B00AAADAF /* CoreGraphics.framework */,

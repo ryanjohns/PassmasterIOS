@@ -7,7 +7,10 @@
 //
 
 #import "ViewController.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import <Security/Security.h>
 
+static const UInt8 keychainItemIdentifier[] = "io.passmaster.Keychain\0";
 NSString *const PassmasterScheme = @"https";
 NSString *const PassmasterHost = @"passmaster.io";
 NSString *const PassmasterJsScheme = @"passmasterjs";
@@ -83,6 +86,14 @@ NSString *const PassmasterErrorHTML =
     }
     if ([function isEqualToString:@"copyToClipboard"]) {
       [self copyToClipboard:argument];
+    } else if ([function isEqualToString:@"savePasswordForTouchID"]) {
+      [self savePasswordForTouchID:argument];
+    } else if ([function isEqualToString:@"deletePasswordForTouchID"]) {
+      [self deletePasswordForTouchID];
+    } else if ([function isEqualToString:@"checkForTouchIDAndPassword"]) {
+      [self checkForTouchIDAndPassword];
+    } else if ([function isEqualToString:@"authenticateWithTouchID"]) {
+      [self authenticateWithTouchID];
     }
     return NO;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
@@ -129,6 +140,96 @@ NSString *const PassmasterErrorHTML =
 {
   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
   pasteboard.string = text;
+}
+
+- (void)savePasswordForTouchID:(NSString *)password
+{
+  [self deletePasswordForTouchID];
+  if (![self touchIDSupported]) {
+    return;
+  }
+  NSDictionary *keychainValue = @{
+    (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+    (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+    (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
+    (__bridge id)kSecValueData: [password dataUsingEncoding:NSUTF8StringEncoding]
+  };
+  SecItemAdd((__bridge CFDictionaryRef)keychainValue, NULL);
+}
+
+- (void)deletePasswordForTouchID
+{
+  if ([self passwordSaved]) {
+    NSDictionary *deleteQuery = @{
+      (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+      (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+      (__bridge id)kSecAttrGeneric: [self getKeychainItemID]
+    };
+    SecItemDelete((__bridge CFDictionaryRef)deleteQuery);
+  }
+}
+
+- (void)authenticateWithTouchID
+{
+  LAContext *context = [[LAContext alloc] init];
+  [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Use fingerprint to unlock accounts" reply:^(BOOL success, NSError *error) {
+    if (success) {
+      OSStatus keychainErr = noErr;
+      CFDataRef passwordData = NULL;
+      keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery], (CFTypeRef *)&passwordData);
+      if (keychainErr == noErr) {
+        NSString *password = [[NSString alloc] initWithBytes:[(__bridge_transfer NSData *)passwordData bytes] length:[(__bridge NSData *)passwordData length] encoding:NSUTF8StringEncoding];
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.unlockWithPasswordFromTouchID('%@')", password]];
+        });
+      } else if (passwordData) {
+        CFRelease(passwordData);
+      }
+    }
+  }];
+}
+
+- (void)checkForTouchIDAndPassword
+{
+  if ([self touchIDSupported] && [self passwordSaved]) {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(true)"];
+  } else {
+    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(false)"];
+  }
+}
+
+- (BOOL)passwordSaved
+{
+  OSStatus keychainErr = noErr;
+  CFMutableDictionaryRef outDictionary = nil;
+  keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery], (CFTypeRef *)&outDictionary);
+  if (outDictionary) {
+    CFRelease(outDictionary);
+  }
+  return keychainErr == noErr;
+}
+
+- (BOOL)touchIDSupported
+{
+  LAContext *context = [[LAContext alloc] init];
+  NSError *error = nil;
+  return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+}
+
+- (NSData *)getKeychainItemID
+{
+  return [NSData dataWithBytes:keychainItemIdentifier length:strlen((const char *)keychainItemIdentifier)];
+}
+
+- (NSDictionary *)getKeychainQuery
+{
+  return @{
+    (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+    (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+    (__bridge id)kSecMatchLimit: (__bridge id)kSecMatchLimitOne,
+    (__bridge id)kSecReturnData: (__bridge id)kCFBooleanTrue,
+    (__bridge id)kSecAttrGeneric: [self getKeychainItemID]
+  };
 }
 
 @end
