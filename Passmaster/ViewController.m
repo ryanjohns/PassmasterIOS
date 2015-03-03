@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <Security/Security.h>
+#import <sys/stat.h>
+#import <mach-o/dyld.h>
 
 static const UInt8 keychainItemIdentifier[] = "io.passmaster.Keychain\0";
 NSString *const PassmasterScheme = @"https";
@@ -30,6 +32,12 @@ NSString *const PassmasterErrorHTML =
 "</body>"
 "</html>";
 
+@interface ViewController ()
+
+@property (nonatomic, assign) BOOL isJailbroken;
+
+@end
+
 @implementation ViewController
 
 - (void)viewDidLoad
@@ -42,6 +50,22 @@ NSString *const PassmasterErrorHTML =
     NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     userAgent = [userAgent stringByAppendingString:[NSString stringWithFormat:@" PassmasterIOS/%@", appVersion]];
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent":userAgent }];
+  }
+
+#if TARGET_IPHONE_SIMULATOR
+  self.isJailbroken = NO;
+#else
+  struct stat s;
+  self.isJailbroken = (stat("/bin/sh", &s) == 0) ? YES : NO;
+  for (uint32_t count = _dyld_image_count(), i = 0; i < count && !self.isJailbroken; i++) {
+    if (strstr(_dyld_get_image_name(i), "MobileSubstrate")) {
+      self.isJailbroken = YES;
+    }
+  }
+#endif
+
+  if (self.isJailbroken) {
+    [self deleteAllPasswordsForTouchID];
   }
 
   [self loadPassmaster];
@@ -77,23 +101,25 @@ NSString *const PassmasterErrorHTML =
   if ([[url scheme] isEqualToString:PassmasterJsScheme]) {
     NSArray *components = [[url absoluteString] componentsSeparatedByString:@":"];
     NSString *function = [components objectAtIndex:1];
-    NSString *argument = @"";
+    NSMutableArray *arguments = [NSMutableArray array];
     if (components.count > 2) {
       NSRange range;
       range.location = 2;
       range.length = components.count - 2;
-      argument = [[[components subarrayWithRange:range] componentsJoinedByString:@":"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      for (NSString *arg in [components subarrayWithRange:range]) {
+        [arguments addObject:[arg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+      }
     }
     if ([function isEqualToString:@"copyToClipboard"]) {
-      [self copyToClipboard:argument];
+      [self copyToClipboard:arguments[0]];
     } else if ([function isEqualToString:@"savePasswordForTouchID"]) {
-      [self savePasswordForTouchID:argument];
+      [self savePasswordForTouchID:arguments[0] password:arguments[1]];
     } else if ([function isEqualToString:@"deletePasswordForTouchID"]) {
-      [self deletePasswordForTouchID];
+      [self deletePasswordForTouchID:arguments[0]];
     } else if ([function isEqualToString:@"checkForTouchIDAndPassword"]) {
-      [self checkForTouchIDAndPassword];
+      [self checkForTouchIDAndPassword:arguments[0]];
     } else if ([function isEqualToString:@"authenticateWithTouchID"]) {
-      [self authenticateWithTouchID];
+      [self authenticateWithTouchID:arguments[0]];
     }
     return NO;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
@@ -142,9 +168,9 @@ NSString *const PassmasterErrorHTML =
   pasteboard.string = text;
 }
 
-- (void)savePasswordForTouchID:(NSString *)password
+- (void)savePasswordForTouchID:(NSString *)userId password:(NSString *)password
 {
-  [self deletePasswordForTouchID];
+  [self deletePasswordForTouchID:userId];
   if (![self touchIDSupported]) {
     return;
   }
@@ -152,31 +178,42 @@ NSString *const PassmasterErrorHTML =
     (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
     (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
+    (__bridge id)kSecAttrAccount: [userId dataUsingEncoding:NSUTF8StringEncoding],
     (__bridge id)kSecValueData: [password dataUsingEncoding:NSUTF8StringEncoding]
   };
   SecItemAdd((__bridge CFDictionaryRef)keychainValue, NULL);
 }
 
-- (void)deletePasswordForTouchID
+- (void)deletePasswordForTouchID:(NSString *)userId
 {
-  if ([self passwordSaved]) {
+  if ([self passwordSaved:userId]) {
     NSDictionary *deleteQuery = @{
       (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
       (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-      (__bridge id)kSecAttrGeneric: [self getKeychainItemID]
+      (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
+      (__bridge id)kSecAttrAccount: [userId dataUsingEncoding:NSUTF8StringEncoding]
     };
     SecItemDelete((__bridge CFDictionaryRef)deleteQuery);
   }
 }
 
-- (void)authenticateWithTouchID
+- (void)deleteAllPasswordsForTouchID {
+  NSDictionary *deleteQuery = @{
+    (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+    (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+    (__bridge id)kSecAttrGeneric: [self getKeychainItemID]
+  };
+  SecItemDelete((__bridge CFDictionaryRef)deleteQuery);
+}
+
+- (void)authenticateWithTouchID:(NSString *)userId
 {
   LAContext *context = [[LAContext alloc] init];
   [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Use fingerprint to unlock accounts" reply:^(BOOL success, NSError *error) {
     if (success) {
       OSStatus keychainErr = noErr;
       CFDataRef passwordData = NULL;
-      keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery], (CFTypeRef *)&passwordData);
+      keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery:userId], (CFTypeRef *)&passwordData);
       if (keychainErr == noErr) {
         NSString *password = [[NSString alloc] initWithBytes:[(__bridge_transfer NSData *)passwordData bytes] length:[(__bridge NSData *)passwordData length] encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -189,20 +226,20 @@ NSString *const PassmasterErrorHTML =
   }];
 }
 
-- (void)checkForTouchIDAndPassword
+- (void)checkForTouchIDAndPassword:(NSString *)userId
 {
-  if ([self touchIDSupported] && [self passwordSaved]) {
+  if ([self touchIDSupported] && [self passwordSaved:userId]) {
     [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(true)"];
   } else {
     [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(false)"];
   }
 }
 
-- (BOOL)passwordSaved
+- (BOOL)passwordSaved:(NSString *)userId
 {
   OSStatus keychainErr = noErr;
   CFMutableDictionaryRef outDictionary = nil;
-  keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery], (CFTypeRef *)&outDictionary);
+  keychainErr = SecItemCopyMatching((__bridge CFDictionaryRef)[self getKeychainQuery:userId], (CFTypeRef *)&outDictionary);
   if (outDictionary) {
     CFRelease(outDictionary);
   }
@@ -211,6 +248,9 @@ NSString *const PassmasterErrorHTML =
 
 - (BOOL)touchIDSupported
 {
+  if (self.isJailbroken) {
+    return NO;
+  }
   LAContext *context = [[LAContext alloc] init];
   NSError *error = nil;
   return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
@@ -221,14 +261,15 @@ NSString *const PassmasterErrorHTML =
   return [NSData dataWithBytes:keychainItemIdentifier length:strlen((const char *)keychainItemIdentifier)];
 }
 
-- (NSDictionary *)getKeychainQuery
+- (NSDictionary *)getKeychainQuery:(NSString *)userId
 {
   return @{
     (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
     (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
     (__bridge id)kSecMatchLimit: (__bridge id)kSecMatchLimitOne,
     (__bridge id)kSecReturnData: (__bridge id)kCFBooleanTrue,
-    (__bridge id)kSecAttrGeneric: [self getKeychainItemID]
+    (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
+    (__bridge id)kSecAttrAccount: [userId dataUsingEncoding:NSUTF8StringEncoding]
   };
 }
 
