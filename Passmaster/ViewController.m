@@ -113,11 +113,11 @@ NSString *const PassmasterErrorHTML =
     if ([function isEqualToString:@"copyToClipboard"]) {
       [self copyToClipboard:arguments[0]];
     } else if ([function isEqualToString:@"savePasswordForTouchID"]) {
-      [self savePasswordForTouchID:arguments[0] password:arguments[1]];
+      [self savePasswordForTouchID:arguments[0] password:arguments[1] enabled:arguments[2]];
     } else if ([function isEqualToString:@"deletePasswordForTouchID"]) {
       [self deletePasswordForTouchID:arguments[0]];
-    } else if ([function isEqualToString:@"checkForTouchIDAndPassword"]) {
-      [self checkForTouchIDAndPassword:arguments[0]];
+    } else if ([function isEqualToString:@"checkForTouchIDUsability"]) {
+      [self checkForTouchIDUsability:arguments[0] enabled:arguments[1]];
     } else if ([function isEqualToString:@"authenticateWithTouchID"]) {
       [self authenticateWithTouchID:arguments[0]];
     }
@@ -168,10 +168,10 @@ NSString *const PassmasterErrorHTML =
   pasteboard.string = text;
 }
 
-- (void)savePasswordForTouchID:(NSString *)userId password:(NSString *)password
+- (void)savePasswordForTouchID:(NSString *)userId password:(NSString *)password enabled:(NSString *)enabled
 {
   [self deletePasswordForTouchID:userId];
-  if (![self touchIDSupported]) {
+  if (![self touchIDSupported] || ![enabled isEqualToString:@"true"]) {
     return;
   }
   NSDictionary *keychainValue = @{
@@ -226,13 +226,16 @@ NSString *const PassmasterErrorHTML =
   }];
 }
 
-- (void)checkForTouchIDAndPassword:(NSString *)userId
+- (void)checkForTouchIDUsability:(NSString *)userId enabled:(NSString *)enabled
 {
-  if ([self touchIDSupported] && [self passwordSaved:userId]) {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(true)"];
-  } else {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.setUnlockWithTouchIDBtnVisibility(false)"];
+  BOOL isSupported = [self touchIDSupported];
+  BOOL hasPassword = [self passwordSaved:userId];
+  BOOL userEnabled = [enabled isEqualToString:@"true"];
+  if (hasPassword && (!userEnabled || !isSupported)) {
+    [self deletePasswordForTouchID:userId];
+    hasPassword = NO;
   }
+  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.setTouchIDUsability(%@, %@)", (isSupported ? @"true" : @"false"), (hasPassword ? @"true" : @"false")]];
 }
 
 - (BOOL)passwordSaved:(NSString *)userId
