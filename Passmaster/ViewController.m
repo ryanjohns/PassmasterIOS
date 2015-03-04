@@ -64,9 +64,8 @@ NSString *const PassmasterErrorHTML =
   }
 #endif
 
-  if (self.isJailbroken) {
-    [self deleteAllPasswordsForTouchID];
-  }
+  // this will delete all keychain items if jailbroken or touch ID not supported
+  [self touchIDSupported];
 
   [self loadPassmaster];
 }
@@ -115,7 +114,9 @@ NSString *const PassmasterErrorHTML =
     } else if ([function isEqualToString:@"savePasswordForTouchID"]) {
       [self savePasswordForTouchID:arguments[0] password:arguments[1] enabled:arguments[2]];
     } else if ([function isEqualToString:@"deletePasswordForTouchID"]) {
-      [self deletePasswordForTouchID:arguments[0]];
+      if ([self passwordSaved:arguments[0]]) {
+        [self deletePasswordForTouchID:arguments[0]];
+      }
     } else if ([function isEqualToString:@"checkForTouchIDUsability"]) {
       [self checkForTouchIDUsability:arguments[0] enabled:arguments[1]];
     } else if ([function isEqualToString:@"authenticateWithTouchID"]) {
@@ -170,8 +171,13 @@ NSString *const PassmasterErrorHTML =
 
 - (void)savePasswordForTouchID:(NSString *)userId password:(NSString *)password enabled:(NSString *)enabled
 {
-  [self deletePasswordForTouchID:userId];
-  if (![self touchIDSupported] || ![enabled isEqualToString:@"true"]) {
+  if (![self touchIDSupported]) {
+    return;
+  }
+  if ([self passwordSaved:userId]) {
+    [self deletePasswordForTouchID:userId];
+  }
+  if (![enabled isEqualToString:@"true"]) {
     return;
   }
   NSDictionary *keychainValue = @{
@@ -186,15 +192,13 @@ NSString *const PassmasterErrorHTML =
 
 - (void)deletePasswordForTouchID:(NSString *)userId
 {
-  if ([self passwordSaved:userId]) {
-    NSDictionary *deleteQuery = @{
-      (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
-      (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
-      (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
-      (__bridge id)kSecAttrAccount: [userId dataUsingEncoding:NSUTF8StringEncoding]
-    };
-    SecItemDelete((__bridge CFDictionaryRef)deleteQuery);
-  }
+  NSDictionary *deleteQuery = @{
+    (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
+    (__bridge id)kSecAttrAccessible: (__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+    (__bridge id)kSecAttrGeneric: [self getKeychainItemID],
+    (__bridge id)kSecAttrAccount: [userId dataUsingEncoding:NSUTF8StringEncoding]
+  };
+  SecItemDelete((__bridge CFDictionaryRef)deleteQuery);
 }
 
 - (void)deleteAllPasswordsForTouchID {
@@ -209,7 +213,7 @@ NSString *const PassmasterErrorHTML =
 - (void)authenticateWithTouchID:(NSString *)userId
 {
   LAContext *context = [[LAContext alloc] init];
-  [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Use fingerprint to unlock accounts" reply:^(BOOL success, NSError *error) {
+  [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authentication is required to unlock your accounts." reply:^(BOOL success, NSError *error) {
     if (success) {
       OSStatus keychainErr = noErr;
       CFDataRef passwordData = NULL;
@@ -231,7 +235,7 @@ NSString *const PassmasterErrorHTML =
   BOOL isSupported = [self touchIDSupported];
   BOOL hasPassword = [self passwordSaved:userId];
   BOOL userEnabled = [enabled isEqualToString:@"true"];
-  if (hasPassword && (!userEnabled || !isSupported)) {
+  if (isSupported && hasPassword && !userEnabled) {
     [self deletePasswordForTouchID:userId];
     hasPassword = NO;
   }
@@ -251,12 +255,14 @@ NSString *const PassmasterErrorHTML =
 
 - (BOOL)touchIDSupported
 {
-  if (self.isJailbroken) {
-    return NO;
-  }
   LAContext *context = [[LAContext alloc] init];
   NSError *error = nil;
-  return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+  if (!self.isJailbroken && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+    return YES;
+  } else {
+    [self deleteAllPasswordsForTouchID];
+    return NO;
+  }
 }
 
 - (NSData *)getKeychainItemID
