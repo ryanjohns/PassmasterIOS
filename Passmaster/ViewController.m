@@ -226,6 +226,10 @@ NSString *const PassmasterErrorHTML =
       } else if (passwordData) {
         CFRelease(passwordData);
       }
+    } else if (error.code == LAErrorUserFallback) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.userFallbackForTouchID()"];
+      });
     }
   }];
 }
