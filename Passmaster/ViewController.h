@@ -11,7 +11,6 @@
 @interface ViewController : UIViewController <UIWebViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) NSDate *lockTime;
 
 - (void)loadOrUpdateWebApp;
 - (void)checkLockTime;

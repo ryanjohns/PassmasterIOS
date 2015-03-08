@@ -35,6 +35,7 @@ NSString *const PassmasterErrorHTML =
 @interface ViewController ()
 
 @property (nonatomic, assign) BOOL isJailbroken;
+@property (nonatomic, assign) uint32_t lockTime;
 
 @end
 
@@ -43,6 +44,8 @@ NSString *const PassmasterErrorHTML =
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+
+  self.lockTime = 0;
 
   UIWebView *tempWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
   NSString *userAgent = [tempWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
@@ -144,7 +147,7 @@ NSString *const PassmasterErrorHTML =
 
 - (void)checkLockTime
 {
-  if ([[NSDate date] timeIntervalSinceDate:[self lockTime]] >= 0) {
+  if (self.lockTime > 0 && self.lockTime < [[NSDate date] timeIntervalSince1970]) {
     [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.lock()"];
   }
 }
@@ -152,7 +155,11 @@ NSString *const PassmasterErrorHTML =
 - (void)saveLockTime
 {
   NSInteger minutes = [[self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.getTimeoutMinutes()"] integerValue];
-  [self setLockTime:[[NSDate alloc] initWithTimeIntervalSinceNow:(minutes * 60)]];
+  if (minutes == 0) {
+    self.lockTime = 0;
+  } else {
+    self.lockTime = [[NSDate dateWithTimeIntervalSinceNow:(minutes * 60)] timeIntervalSince1970];
+  }
 }
 
 #pragma mark - Private helpers
