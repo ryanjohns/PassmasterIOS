@@ -87,6 +87,7 @@ NSString *const PassmasterErrorHTML =
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+  [self.webView setHidden:NO];
   [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
@@ -109,7 +110,7 @@ NSString *const PassmasterErrorHTML =
       range.location = 2;
       range.length = components.count - 2;
       for (NSString *arg in [components subarrayWithRange:range]) {
-        [arguments addObject:[arg stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        [arguments addObject:[arg stringByRemovingPercentEncoding]];
       }
     }
     if ([function isEqualToString:@"copyToClipboard"]) {
@@ -250,7 +251,7 @@ NSString *const PassmasterErrorHTML =
     [self deletePasswordForTouchID:userId];
     hasPassword = NO;
   }
-  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.setTouchIDUsability(%@, %@)", (isSupported ? @"true" : @"false"), (hasPassword ? @"true" : @"false")]];
+  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.setTouchIDUsability(%@, %@, %@)", (isSupported ? @"true" : @"false"), (hasPassword ? @"true" : @"false"), ([self faceIDSupported] ? @"true" : @"false")]];
 }
 
 - (BOOL)passwordSaved:(NSString *)userId
@@ -274,6 +275,18 @@ NSString *const PassmasterErrorHTML =
     [self deleteAllPasswordsForTouchID];
     return NO;
   }
+}
+
+- (BOOL)faceIDSupported
+{
+  if (@available(iOS 11.0, *)) {
+    LAContext *context = [[LAContext alloc] init];
+    NSError *error = nil;
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error] && context.biometryType == LABiometryTypeFaceID) {
+      return YES;
+    }
+  }
+  return NO;
 }
 
 - (NSData *)getKeychainItemID

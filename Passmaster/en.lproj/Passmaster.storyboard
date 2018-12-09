@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -10,26 +14,26 @@
             <objects>
                 <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aaV-Ve-E4C"/>
-                        <viewControllerLayoutGuide type="bottom" id="RBU-ES-x7D"/>
+                        <viewControllerLayoutGuide type="top" id="S93-od-Nc6"/>
+                        <viewControllerLayoutGuide type="bottom" id="inW-ZT-r0G"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" keyboardDisplayRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMw-pT-hj4">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" red="0.54325767268583569" green="0.60388262902662826" blue="0.67131988211951454" alpha="1" colorSpace="calibratedRGB"/>
+                            <webView hidden="YES" contentMode="scaleToFill" allowsInlineMediaPlayback="NO" mediaPlaybackRequiresUserAction="NO" mediaPlaybackAllowsAirPlay="NO" keyboardDisplayRequiresUserAction="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMw-pT-hj4">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.54325767268583569" green="0.60388262902662826" blue="0.67131988211951454" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
                                 <connections>
                                     <outlet property="delegate" destination="2" id="Vqy-74-T9d"/>
                                 </connections>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.54325767270000003" green="0.603882629" blue="0.67131988210000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="YMw-pT-hj4" secondAttribute="trailing" id="WYj-ex-EJR"/>
-                            <constraint firstItem="YMw-pT-hj4" firstAttribute="top" secondItem="aaV-Ve-E4C" secondAttribute="bottom" id="cvQ-5k-Q2h"/>
+                            <constraint firstItem="YMw-pT-hj4" firstAttribute="top" secondItem="S93-od-Nc6" secondAttribute="bottom" id="cvQ-5k-Q2h"/>
                             <constraint firstAttribute="bottom" secondItem="YMw-pT-hj4" secondAttribute="bottom" id="lkx-db-AYy"/>
                             <constraint firstItem="YMw-pT-hj4" firstAttribute="leading" secondItem="3" secondAttribute="leading" id="yRl-TQ-3Z6"/>
                         </constraints>
