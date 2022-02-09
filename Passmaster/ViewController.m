@@ -22,20 +22,32 @@ NSString *const PassmasterErrorHTML =
   "<style type='text/css'>"
     "body { background-color: #8b99ab; color: #fff; text-align: center; font-family: arial, sans-serif; }"
   "</style>"
+  "<script>"
+    "function loadPassmaster() {"
+      "var iframe = document.createElement('IFRAME');"
+      "iframe.setAttribute('src', 'passmasterjs:loadPassmaster:');"
+      "iframe.setAttribute('width', '1px');"
+      "iframe.setAttribute('height', '1px');"
+      "document.documentElement.appendChild(iframe);"
+      "iframe.parentNode.removeChild(iframe);"
+      "iframe = null;"
+    "}"
+  "</script>"
 "</head>"
 "<body>"
   "<div>"
     "<h2>Passmaster</h2>"
     "<h4>We're sorry, but something went wrong.</h4>"
     "<h4>%@</h4>"
+    "<button onclick='loadPassmaster();'>Try again</button>"
   "</div>"
 "</body>"
 "</html>";
 
 @interface ViewController ()
 
-@property (nonatomic, assign) BOOL isJailbroken;
 @property (nonatomic, assign) uint32_t lockTime;
+@property (strong, nonatomic) NSString * passmasterUrl;
 
 @end
 
@@ -46,28 +58,22 @@ NSString *const PassmasterErrorHTML =
   [super viewDidLoad];
 
   self.lockTime = 0;
+  self.passmasterUrl = [NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost];
 
-  UIWebView *tempWebView = [[UIWebView alloc] initWithFrame:CGRectZero];
-  NSString *userAgent = [tempWebView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-  if ([userAgent rangeOfString:@"PassmasterIOS"].location == NSNotFound) {
-    NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-    userAgent = [userAgent stringByAppendingString:[NSString stringWithFormat:@" PassmasterIOS/%@", appVersion]];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent":userAgent }];
-  }
+  NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+  NSString *applicationNameForUserAgent = [NSString stringWithFormat:@"PassmasterIOS/%@", appVersion];
+  WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+  config.applicationNameForUserAgent = applicationNameForUserAgent;
+  config.limitsNavigationsToAppBoundDomains = YES;
 
-#if TARGET_IPHONE_SIMULATOR
-  self.isJailbroken = NO;
-#else
-  struct stat s;
-  self.isJailbroken = (stat("/bin/sh", &s) == 0) ? YES : NO;
-  for (uint32_t count = _dyld_image_count(), i = 0; i < count && !self.isJailbroken; i++) {
-    if (strstr(_dyld_get_image_name(i), "MobileSubstrate")) {
-      self.isJailbroken = YES;
-    }
-  }
-#endif
+  self.webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:config];
+  self.webView.navigationDelegate = self;
+  self.webView.UIDelegate = self;
+  self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
-  // this will delete all keychain items if jailbroken or touch ID not supported
+  [self.view addSubview:self.webView];
+
+  // this will delete all keychain items if touch ID not supported
   [self touchIDSupported];
 
   [self loadPassmaster];
@@ -78,29 +84,29 @@ NSString *const PassmasterErrorHTML =
   [super didReceiveMemoryWarning];
 }
 
-#pragma mark - UIWebViewDelegate methods
+#pragma mark - WKNavigationDelegate methods
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
-{
-  [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
   [self.webView setHidden:NO];
-  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+  [self.webView evaluateJavaScript:@"MobileApp.clickUnlockWithTouchID()" completionHandler:nil];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-  [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
   NSString *errorString = [NSString stringWithFormat:PassmasterErrorHTML, error.localizedDescription];
   [self.webView loadHTMLString:errorString baseURL:nil];
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-  NSURL *url = [request URL];
+  NSString *errorString = [NSString stringWithFormat:PassmasterErrorHTML, error.localizedDescription];
+  [self.webView loadHTMLString:errorString baseURL:nil];
+}
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+{
+  NSURL *url = navigationAction.request.URL;
   if ([[url scheme] isEqualToString:PassmasterJsScheme]) {
     NSArray *components = [[url absoluteString] componentsSeparatedByString:@":"];
     NSString *function = [components objectAtIndex:1];
@@ -125,49 +131,97 @@ NSString *const PassmasterErrorHTML =
       [self checkForTouchIDUsability:arguments[0] enabled:arguments[1]];
     } else if ([function isEqualToString:@"authenticateWithTouchID"]) {
       [self authenticateWithTouchID:arguments[0]];
+    } else if ([function isEqualToString:@"loadPassmaster"]) {
+      [self loadPassmaster];
     }
-    return NO;
-  } else if (navigationType == UIWebViewNavigationTypeLinkClicked && ![[url host] isEqualToString:PassmasterHost]) {
-    [[UIApplication sharedApplication] openURL:url];
-    return NO;
+    decisionHandler(WKNavigationActionPolicyCancel);
+    return;
+  } else if (navigationAction.navigationType == WKNavigationTypeLinkActivated && ![url.absoluteString isEqualToString:self.passmasterUrl]) {
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    decisionHandler(WKNavigationActionPolicyCancel);
+    return;
   }
-  return YES;
+  decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+#pragma mark - WKUIDelegate methods
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+  [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    completionHandler();
+  }]];
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
+{
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    completionHandler(NO);
+  }]];
+  [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    completionHandler(YES);
+  }]];
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler
+{
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:prompt preferredStyle:UIAlertControllerStyleAlert];
+  [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+    textField.secureTextEntry = NO;
+    textField.text = defaultText;
+  }];
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    completionHandler(nil);
+  }]];
+  [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    completionHandler([alert.textFields.firstObject text]);
+  }]];
+  [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Public helpers
 
 - (void)loadOrUpdateWebApp
 {
-  NSString *isLoaded = [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.appLoaded()"];
-  if ([isLoaded isEqualToString:@"YES"]) {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.updateAppCache()"];
-  } else {
-    [self loadPassmaster];
-  }
+  [self.webView evaluateJavaScript:@"MobileApp.appLoaded()" completionHandler:^(NSString * _Nullable result, NSError * _Nullable error) {
+    if (error == nil && [result isEqualToString:@"YES"]) {
+      [self.webView evaluateJavaScript:@"MobileApp.clickUnlockWithTouchID()" completionHandler:nil];
+    } else {
+      [self loadPassmaster];
+    }
+  }];
 }
 
 - (void)checkLockTime
 {
   if (self.lockTime > 0 && self.lockTime < [[NSDate date] timeIntervalSince1970]) {
-    [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.lock()"];
+    [self.webView evaluateJavaScript:@"MobileApp.lock()" completionHandler:nil];
   }
 }
 
 - (void)saveLockTime
 {
-  NSInteger minutes = [[self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.getTimeoutMinutes()"] integerValue];
-  if (minutes == 0) {
-    self.lockTime = 0;
-  } else {
-    self.lockTime = [[NSDate dateWithTimeIntervalSinceNow:(minutes * 60)] timeIntervalSince1970];
-  }
+  [self.webView evaluateJavaScript:@"MobileApp.getTimeoutMinutes()" completionHandler:^(NSString * _Nullable result, NSError * _Nullable error) {
+    if (error == nil) {
+      NSInteger minutes = [result integerValue];
+      if (minutes == 0) {
+        self.lockTime = 0;
+      } else {
+        self.lockTime = [[NSDate dateWithTimeIntervalSinceNow:(minutes * 60)] timeIntervalSince1970];
+      }
+    }
+  }];
 }
 
 #pragma mark - Private helpers
 
 - (void)loadPassmaster
 {
-  NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@/", PassmasterScheme, PassmasterHost]];
+  NSURL *url = [NSURL URLWithString:self.passmasterUrl];
   [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
@@ -221,7 +275,7 @@ NSString *const PassmasterErrorHTML =
 - (void)authenticateWithTouchID:(NSString *)userId
 {
   LAContext *context = [[LAContext alloc] init];
-  [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"Authentication is required to unlock your accounts." reply:^(BOOL success, NSError *error) {
+  [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication localizedReason:@"Unlock Your Accounts" reply:^(BOOL success, NSError *error) {
     if (success) {
       OSStatus keychainErr = noErr;
       CFDataRef passwordData = NULL;
@@ -229,14 +283,14 @@ NSString *const PassmasterErrorHTML =
       if (keychainErr == noErr) {
         NSString *password = [[NSString alloc] initWithBytes:[(__bridge_transfer NSData *)passwordData bytes] length:[(__bridge NSData *)passwordData length] encoding:NSUTF8StringEncoding];
         dispatch_async(dispatch_get_main_queue(), ^{
-          [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.unlockWithPasswordFromTouchID('%@')", password]];
+          [self.webView evaluateJavaScript:[NSString stringWithFormat:@"MobileApp.unlockWithPasswordFromTouchID('%@')", password] completionHandler:nil];
         });
       } else if (passwordData) {
         CFRelease(passwordData);
       }
-    } else if (error.code == LAErrorUserFallback) {
+    } else if (error.code == LAErrorUserCancel || error.code == LAErrorPasscodeNotSet) {
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self.webView stringByEvaluatingJavaScriptFromString:@"MobileApp.userFallbackForTouchID()"];
+        [self.webView evaluateJavaScript:@"MobileApp.userFallbackForTouchID()" completionHandler:nil];
       });
     }
   }];
@@ -251,7 +305,7 @@ NSString *const PassmasterErrorHTML =
     [self deletePasswordForTouchID:userId];
     hasPassword = NO;
   }
-  [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"MobileApp.setTouchIDUsability(%@, %@, %@)", (isSupported ? @"true" : @"false"), (hasPassword ? @"true" : @"false"), ([self faceIDSupported] ? @"true" : @"false")]];
+  [self.webView evaluateJavaScript:[NSString stringWithFormat:@"MobileApp.setTouchIDUsability(%@, %@, %@)", (isSupported ? @"true" : @"false"), (hasPassword ? @"true" : @"false"), ([self faceIDSupported] ? @"true" : @"false")] completionHandler:nil];
 }
 
 - (BOOL)passwordSaved:(NSString *)userId
@@ -269,7 +323,7 @@ NSString *const PassmasterErrorHTML =
 {
   LAContext *context = [[LAContext alloc] init];
   NSError *error = nil;
-  if (!self.isJailbroken && [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+  if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
     return YES;
   } else {
     [self deleteAllPasswordsForTouchID];
@@ -279,12 +333,10 @@ NSString *const PassmasterErrorHTML =
 
 - (BOOL)faceIDSupported
 {
-  if (@available(iOS 11.0, *)) {
-    LAContext *context = [[LAContext alloc] init];
-    NSError *error = nil;
-    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error] && context.biometryType == LABiometryTypeFaceID) {
-      return YES;
-    }
+  LAContext *context = [[LAContext alloc] init];
+  NSError *error = nil;
+  if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error] && context.biometryType == LABiometryTypeFaceID) {
+    return YES;
   }
   return NO;
 }
