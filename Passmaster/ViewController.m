@@ -228,7 +228,10 @@ NSString *const PassmasterErrorHTML =
 - (void)copyToClipboard:(NSString *)text
 {
   UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-  pasteboard.string = text;
+  NSDate *expiresAt = [NSDate dateWithTimeIntervalSinceNow:90];
+  NSArray *pasteboardItems = @[@{UIPasteboardTypeListString[0]: text}];
+  NSDictionary *pasteboardOptions = @{UIPasteboardOptionLocalOnly: @YES, UIPasteboardOptionExpirationDate: expiresAt};
+  [pasteboard setItems:pasteboardItems options:pasteboardOptions];
 }
 
 - (void)savePasswordForTouchID:(NSString *)userId password:(NSString *)password enabled:(NSString *)enabled
