@@ -89,19 +89,24 @@ NSString *const PassmasterErrorHTML =
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
   [self.webView setHidden:NO];
-  [self.webView evaluateJavaScript:@"MobileApp.clickUnlockWithTouchID()" completionHandler:nil];
+  if ([self.webView.URL isEqual:[NSURL URLWithString:self.passmasterUrl]]) {
+    [self.webView createWebArchiveDataWithCompletionHandler:^(NSData * data, NSError * error) {
+      if (!error) {
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"passmaster_webarchive"];
+      }
+    }];
+    [self.webView evaluateJavaScript:@"MobileApp.clickUnlockWithTouchID()" completionHandler:nil];
+  }
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-  NSString *errorString = [NSString stringWithFormat:PassmasterErrorHTML, error.localizedDescription];
-  [self.webView loadHTMLString:errorString baseURL:nil];
+  [self webViewNavigationFailedWithError:error];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
-  NSString *errorString = [NSString stringWithFormat:PassmasterErrorHTML, error.localizedDescription];
-  [self.webView loadHTMLString:errorString baseURL:nil];
+  [self webViewNavigationFailedWithError:error];
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
@@ -223,6 +228,17 @@ NSString *const PassmasterErrorHTML =
 {
   NSURL *url = [NSURL URLWithString:self.passmasterUrl];
   [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+- (void)webViewNavigationFailedWithError:(NSError *)error
+{
+  NSData *webArchive = [[NSUserDefaults standardUserDefaults] dataForKey:@"passmaster_webarchive"];
+  if (webArchive) {
+    [self.webView loadData:webArchive MIMEType:@"application/x-webarchive" characterEncodingName:@"UTF-8" baseURL:[NSURL URLWithString:self.passmasterUrl]];
+  } else {
+    NSString *errorString = [NSString stringWithFormat:PassmasterErrorHTML, error.localizedDescription];
+    [self.webView loadHTMLString:errorString baseURL:nil];
+  }
 }
 
 - (void)copyToClipboard:(NSString *)text
