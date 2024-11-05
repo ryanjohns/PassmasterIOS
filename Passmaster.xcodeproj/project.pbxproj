@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9403B3B927AE04D800B3F7C2 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9403B3B827AE04D800B3F7C2 /* WebKit.framework */; };
-		945B52F627B0A4CD009EA5FF /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 945B52F527B0A4CD009EA5FF /* Launch Screen.storyboard */; };
-		947A2D501899016C00207CB4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947A2D4F1899016C00207CB4 /* Images.xcassets */; };
+		947A2D501899016C00207CB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947A2D4F1899016C00207CB4 /* Assets.xcassets */; };
 		94D8FDB41AA43BAB006560B2 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D8FDB31AA43BAB006560B2 /* LocalAuthentication.framework */; };
 		94D8FDB61AA444B3006560B2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94D8FDB51AA444B3006560B2 /* Security.framework */; };
 		94F027C316E7159B00AAADAF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F027C216E7159B00AAADAF /* UIKit.framework */; };
@@ -24,8 +23,7 @@
 
 /* Begin PBXFileReference section */
 		9403B3B827AE04D800B3F7C2 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		945B52F527B0A4CD009EA5FF /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		947A2D4F1899016C00207CB4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		947A2D4F1899016C00207CB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		94CF1165276DC5D800B0C770 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Passmaster.storyboard; sourceTree = "<group>"; };
 		94D8FDB31AA43BAB006560B2 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		94D8FDB51AA444B3006560B2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -99,10 +97,9 @@
 				94F027D116E7159B00AAADAF /* AppDelegate.h */,
 				94F027D216E7159B00AAADAF /* AppDelegate.m */,
 				94F027DA16E7159B00AAADAF /* Passmaster.storyboard */,
-				945B52F527B0A4CD009EA5FF /* Launch Screen.storyboard */,
 				94F027E016E7159B00AAADAF /* ViewController.h */,
 				94F027E116E7159B00AAADAF /* ViewController.m */,
-				947A2D4F1899016C00207CB4 /* Images.xcassets */,
+				947A2D4F1899016C00207CB4 /* Assets.xcassets */,
 				94F027C916E7159B00AAADAF /* Supporting Files */,
 			);
 			path = Passmaster;
@@ -151,7 +148,6 @@
 				ORGANIZATIONNAME = Passmaster;
 			};
 			buildConfigurationList = 94F027BA16E7159B00AAADAF /* Build configuration list for PBXProject "Passmaster" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -159,6 +155,7 @@
 				Base,
 			);
 			mainGroup = 94F027B616E7159B00AAADAF;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 94F027C016E7159B00AAADAF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -175,8 +172,7 @@
 			files = (
 				94F027CD16E7159B00AAADAF /* InfoPlist.strings in Resources */,
 				94F027DC16E7159B00AAADAF /* Passmaster.storyboard in Resources */,
-				945B52F627B0A4CD009EA5FF /* Launch Screen.storyboard in Resources */,
-				947A2D501899016C00207CB4 /* Images.xcassets in Resources */,
+				947A2D501899016C00207CB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
@@ -310,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -327,13 +323,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 57SRQQWC92;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.passmaster.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -348,13 +344,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = 57SRQQWC92;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Passmaster/Passmaster-Prefix.pch";
 				INFOPLIST_FILE = "Passmaster/Passmaster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "io.passmaster.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
